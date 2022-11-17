@@ -1,7 +1,7 @@
 build:
 	docker build -t api-v3000 -f system/Dockerfile .
 push:
-	docker tag test cr.yandex/${registry_id}/api-v3000
+	docker tag api-v3000 cr.yandex/${registry_id}/api-v3000
 	docker push cr.yandex/${registry_id}/api-v3000
 isort:
 	isort --profile black app functions

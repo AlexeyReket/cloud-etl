@@ -13,9 +13,13 @@ class LoginHandler:
     async def handle(cls, payload: LoginSchema):
         user = await UserRepository.find_by_login(payload.login)
         if not user:
-            raise HTTPException(status_code=http.HTTPStatus.BAD_REQUEST, detail="wrong login")
+            raise HTTPException(
+                status_code=http.HTTPStatus.BAD_REQUEST, detail="wrong login"
+            )
         if not auth.verify_password(payload.password, user.hashed_password):
-            raise HTTPException(status_code=http.HTTPStatus.BAD_REQUEST, detail="wrong password")
+            raise HTTPException(
+                status_code=http.HTTPStatus.BAD_REQUEST, detail="wrong password"
+            )
         return LoginUserResponseSchema(
             token=auth.encode_data(
                 {"id": user.id, "created_at": datetime.utcnow().isoformat()}

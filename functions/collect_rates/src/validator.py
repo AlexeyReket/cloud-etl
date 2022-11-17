@@ -1,16 +1,17 @@
 import datetime
+import http
 import json
 from json import JSONDecodeError
 
 from src.schema import EventData
 
 
-def validate_event(event):
+def validate_event(event) -> EventData:
     body = event.get("body") if event else None
     if not body:
         raise Exception(
             {
-                "statusCode": 400,
+                "statusCode": http.HTTPStatus.BAD_REQUEST,
                 "headers": {"content-type": "application/json"},
                 "body": {"result": "error", "detail": "no body"},
             }
@@ -21,7 +22,7 @@ def validate_event(event):
         except JSONDecodeError:
             raise Exception(
                 {
-                    "statusCode": 400,
+                    "statusCode": http.HTTPStatus.BAD_REQUEST,
                     "headers": {"content-type": "application/json"},
                     "body": {"result": "error", "detail": "wrong body"},
                 }
@@ -37,7 +38,7 @@ def validate_event(event):
         except ValueError:
             raise Exception(
                 {
-                    "statusCode": 400,
+                    "statusCode": http.HTTPStatus.BAD_REQUEST,
                     "headers": {"content-type": "application/json"},
                     "body": {"result": "error", "detail": "invalid date"},
                 }

@@ -12,10 +12,14 @@ class UserService:
     async def check_login_and_username_for_free(cls, login: str, username: str) -> None:
         users_logins = await UserRepository.find_all_logins()
         if login in users_logins:
-            raise HTTPException(status_code=http.HTTPStatus.BAD_REQUEST, detail="not unique login")
+            raise HTTPException(
+                status_code=http.HTTPStatus.BAD_REQUEST, detail="not unique login"
+            )
         users_names = await UserRepository.find_all_usernames()
         if username in users_names:
-            raise HTTPException(status_code=http.HTTPStatus.BAD_REQUEST, detail="not unique username")
+            raise HTTPException(
+                status_code=http.HTTPStatus.BAD_REQUEST, detail="not unique username"
+            )
 
     @classmethod
     async def create(cls, login: str, password: str, username: str) -> UserModel:
@@ -32,5 +36,7 @@ class UserService:
     async def get_user_info(cls, user_id: int) -> UserInfoResponseSchema:
         user = await UserRepository.find_by_id(user_id)
         if not user:
-            raise HTTPException(status_code=http.HTTPStatus.UNAUTHORIZED, detail="unknown user")
+            raise HTTPException(
+                status_code=http.HTTPStatus.UNAUTHORIZED, detail="unknown user"
+            )
         return UserInfoResponseSchema.from_orm(user)

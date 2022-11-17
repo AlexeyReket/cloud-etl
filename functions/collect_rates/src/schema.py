@@ -9,13 +9,13 @@ class EventData:
 
 
 @dataclasses.dataclass
-class VoluteSchema:
+class RatesSchema:
     rate_code: str
     value: float
     nominal: int
 
 
 @dataclasses.dataclass
-class RepositoryVoluteSchema(VoluteSchema):
+class RepositoryRatesSchema(RatesSchema):
     id: int
     date: datetime.date

@@ -3,8 +3,15 @@ import os
 
 import psycopg2
 from src.constants import RATES_TABLENAME
-from src.environment import DATABASE_SCHEMA, DB_DATABASE, DB_USER, DB_PASSWORD, DB_HOST, DB_PORT
-from src.schema import RepositoryVoluteSchema, VoluteSchema
+from src.environment import (
+    DATABASE_SCHEMA,
+    DB_DATABASE,
+    DB_HOST,
+    DB_PASSWORD,
+    DB_PORT,
+    DB_USER,
+)
+from src.schema import RatesSchema, RepositoryRatesSchema
 
 # QUERIES
 INSERT_QUERY = f"""
@@ -41,11 +48,11 @@ class Repository:
     def __init__(self, connection):
         self.connection = connection
 
-    def get_rates(self, date: datetime.date) -> list[RepositoryVoluteSchema]:
+    def get_rates(self, date: datetime.date) -> list[RepositoryRatesSchema]:
         cur = self.connection.cursor()
         cur.execute(SELECT_QUERY, {"date": date})
         return [
-            RepositoryVoluteSchema(
+            RepositoryRatesSchema(
                 id=row[0],
                 rate_code=row[1],
                 value=row[2],
@@ -59,7 +66,7 @@ class Repository:
         cur = self.connection.cursor()
         cur.execute(UPDATE_QUERY, {"ids": tuple(volutes_ids)})
 
-    def save_rates(self, rates: list[VoluteSchema], date: datetime.date) -> None:
+    def save_rates(self, rates: list[RatesSchema], date: datetime.date) -> None:
         cur = self.connection.cursor()
         for rate in rates:
             cur.execute(

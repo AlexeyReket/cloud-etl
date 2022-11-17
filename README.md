@@ -46,6 +46,8 @@ start app
 make debug
 ```
 
+You can view docs on https://localhost:8000/docs
+
 # Environment variables
 
 ## API
@@ -136,7 +138,9 @@ make debug
 > database port
 
 # Deployment
+
 ## API
+
 Build and push docker image
 
 ```shell
@@ -144,12 +148,15 @@ export registry_id="you registry_id"
 make build
 make push
 ```
+
 ## Function
 
-Create zip 
+Create zip
+
 ```shell
 make build-function
 ```
+
 In project root will be created zip with all needed files
 
 You can create function in cloud using this zip
