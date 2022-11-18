@@ -8,10 +8,8 @@ from src.services.database import UserService
 
 
 async def authorization(
-    token_: str = Header(None, alias="x-authorization", regex=r"Bearer .+")
+    token_: str = Header(..., alias="x-authorization", regex=r"Bearer .+", description="Bearer your-token-here")
 ) -> UserInfoResponseSchema:
-    if not token_:
-        raise HTTPException(status_code=401, detail="no token")
     decoded_data = auth.decode_token(token_.split(" ")[1])
     if not decoded_data.get("id"):
         raise HTTPException(status_code=401, detail="wrong token")
