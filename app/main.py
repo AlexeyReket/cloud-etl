@@ -7,7 +7,7 @@ from src.exceptions.handlers import include_exception_handlers
 
 
 def get_app():
-    app_ = FastAPI()
+    app_ = FastAPI(title="RATES-PARSER-API", version="1.0.0")
     app_.include_router(router)
     include_exception_handlers(app_)
     app_.add_middleware(

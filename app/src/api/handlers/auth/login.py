@@ -10,7 +10,7 @@ from src.services import auth
 
 class LoginHandler:
     @classmethod
-    async def handle(cls, payload: LoginSchema):
+    async def handle(cls, payload: LoginSchema) -> LoginUserResponseSchema:
         user = await UserRepository.find_by_login(payload.login)
         if not user:
             raise HTTPException(

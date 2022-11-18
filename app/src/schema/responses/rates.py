@@ -6,3 +6,9 @@ class ShortRateResponse(BaseResponse):
     rate_code: str
     value: float
     nominal: int
+
+
+class CollectRatesResponse(BaseResponse):
+    result: str
+    saved: int
+    updated: int
